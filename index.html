@@ -65,13 +65,6 @@ section,header,footer{overflow-x:clip}
 .btn-ghost>span{background:transparent;color:var(--white);box-shadow:inset 0 0 0 2px var(--white)}
 .btn-ghost:hover>span{background:var(--white);color:var(--black);transform:skewX(-10deg) translateY(-2px)}
 
-/* ---------- topbar ---------- */
-.topbar{background:var(--white);border-bottom:1px solid var(--line);border-top:4px solid var(--orange)}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:14px;padding-bottom:14px}
-.topbar img{height:44px;width:auto}
-.topbar-meta{font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.topbar-meta b{color:var(--orange)}
-
 /* ---------- hero ---------- */
 .hero{position:relative;background:var(--white)}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:stretch}
@@ -232,7 +225,7 @@ section,header,footer{overflow-x:clip}
 /* ---------- footer ---------- */
 .foot{background:var(--black);color:#9BA1AB;padding:26px 0}
 .foot .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.foot img{height:34px;width:auto;background:var(--white);padding:5px 12px}
+.foot img{height:34px;width:auto}
 .foot p{font-family:var(--cond);font-weight:600;font-size:13.5px;letter-spacing:.16em;text-transform:uppercase}
 .foot b{color:var(--orange)}
 
@@ -255,7 +248,6 @@ section,header,footer{overflow-x:clip}
   .btn{width:100%}
   .btn>span{width:calc(100% - 8px);justify-content:center;margin-left:4px}
   .stats .wrap{flex-direction:column;align-items:flex-start;gap:12px}
-  .topbar img{height:36px}
   .soon-ghost{-webkit-text-stroke:1.5px rgba(255,255,255,.55)}
 }
 @media (prefers-reduced-motion:reduce){
@@ -264,14 +256,6 @@ section,header,footer{overflow-x:clip}
 </style>
 </head>
 <body>
-
-<!-- ============ TOPBAR ============ -->
-<header class="topbar">
-  <div class="wrap">
-    <img src="https://images.squarespace-cdn.com/content/v1/6953407c0df0de3499621be3/de08ed9a-cedc-4bbe-9bc1-832ab0d3bc42/ChatGPT+Image+Dec+31%2C+2025%2C+05_35_27+PM.png?format=500w" alt="Vision Prints" width="136" height="44">
-    <span class="topbar-meta">Ipswich QLD <b>//</b> Ships Aus-wide</span>
-  </div>
-</header>
 
 <!-- ============ HERO ============ -->
 <section class="hero" aria-label="Intro">
@@ -501,7 +485,7 @@ section,header,footer{overflow-x:clip}
 
 <footer class="foot">
   <div class="wrap">
-    <img src="https://images.squarespace-cdn.com/content/v1/6953407c0df0de3499621be3/de08ed9a-cedc-4bbe-9bc1-832ab0d3bc42/ChatGPT+Image+Dec+31%2C+2025%2C+05_35_27+PM.png?format=300w" alt="Vision Prints" width="105" height="34" loading="lazy">
+    <img src="images/logo-white.png" alt="Vision Prints" width="105" height="34" loading="lazy">
     <p>Ipswich QLD 4305 <b>//</b> visionprints3d@gmail.com</p>
   </div>
 </footer>
