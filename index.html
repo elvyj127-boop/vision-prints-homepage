@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vision Prints — Your Local 3D Print Hub</title>
+<base target="_top">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#FF5E1A;
+  --orange-dark:#E44A07;
+  --black:#0B0C0E;
+  --carbon:#14161A;
+  --white:#FFFFFF;
+  --grey:#F2F3F5;
+  --line:#E3E5E8;
+  --text:#15171B;
+  --muted:#5D636D;
+  --display:'Kanit',Arial,sans-serif;
+  --body:'Barlow',Arial,sans-serif;
+  --cond:'Barlow Condensed',Arial,sans-serif;
+  --cut:64px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--white);color:var(--text);line-height:1.6;overflow-x:clip}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+a,button{cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+section,header,footer{overflow-x:clip}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+
+/* type */
+.d{font-family:var(--display);font-style:italic;font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-.01em}
+.eyebrow{
+  font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--muted);display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:26px;height:12px;flex:none;
+  background:linear-gradient(105deg,var(--orange) 0 40%,transparent 40% 55%,var(--orange) 55% 100%);
+  clip-path:polygon(28% 0,100% 0,72% 100%,0 100%);
+}
+
+/* skewed buttons */
+.btn{
+  display:inline-block;padding:0;border:0;background:none;
+  font-family:var(--display);font-style:italic;font-weight:800;font-size:16px;
+  letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;
+}
+.btn>span{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 30px;transform:skewX(-10deg);
+  transition:background-color .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.btn>span>span{display:inline-flex;align-items:center;gap:10px;transform:skewX(10deg)}
+.btn-orange>span{background:var(--orange);color:var(--white)}
+.btn-orange:hover>span{background:var(--orange-dark);transform:skewX(-10deg) translateY(-2px);box-shadow:0 10px 24px -8px rgba(255,94,26,.6)}
+.btn-dark>span{background:var(--black);color:var(--white)}
+.btn-dark:hover>span{background:#23262C;transform:skewX(-10deg) translateY(-2px);box-shadow:0 10px 24px -10px rgba(11,12,14,.5)}
+.btn-ghost>span{background:transparent;color:var(--white);box-shadow:inset 0 0 0 2px var(--white)}
+.btn-ghost:hover>span{background:var(--white);color:var(--black);transform:skewX(-10deg) translateY(-2px)}
+
+/* ---------- topbar ---------- */
+.topbar{background:var(--white);border-bottom:1px solid var(--line);border-top:4px solid var(--orange)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:14px;padding-bottom:14px}
+.topbar img{height:44px;width:auto}
+.topbar-meta{font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.topbar-meta b{color:var(--orange)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;background:var(--white)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:stretch}
+.hero-copy{
+  padding:clamp(48px,6vw,104px) clamp(20px,4vw,48px) clamp(48px,6vw,104px) max(clamp(20px,4vw,48px),calc((100vw - 1240px)/2 + 48px));
+  display:flex;flex-direction:column;align-items:flex-start;gap:26px;justify-content:center;
+}
+.hero h1{font-size:clamp(52px,6.2vw,96px);color:var(--black)}
+.hero h1 .h1-top{display:block;font-size:.44em;letter-spacing:.06em;color:var(--black)}
+.hero h1 em{font-style:italic;color:var(--orange);display:block}
+.hero-sub{font-size:clamp(16px,1.4vw,19px);font-weight:500;color:var(--muted);max-width:44ch}
+.hero-sub strong{color:var(--text)}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px}
+.hero-media{position:relative;min-height:360px;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%)}
+.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,rgba(11,12,14,.42) 0%,rgba(11,12,14,0) 45%);
+}
+.hero-media::before{
+  content:"";position:absolute;left:8.5%;top:0;bottom:0;width:26px;z-index:2;
+  background:var(--orange);transform:skewX(-8deg);transform-origin:top;
+}
+
+/* stat strip */
+.stats{background:var(--black);color:var(--white)}
+.stats .wrap{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding-top:20px;padding-bottom:20px;
+}
+.stat{font-family:var(--cond);font-weight:700;font-size:15.5px;letter-spacing:.16em;text-transform:uppercase;display:inline-flex;align-items:center;gap:14px}
+.stat::before{content:"//";color:var(--orange);font-family:var(--display);font-style:italic}
+
+/* ---------- shop ---------- */
+.shop{padding:clamp(64px,7vw,112px) 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(32px,4vw,52px)}
+.sec-head h2{font-size:clamp(38px,4.4vw,64px);color:var(--black)}
+.sec-head h2 em{color:var(--orange);font-style:italic}
+.sec-head .eyebrow{margin-bottom:14px}
+.cat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,1.8vw,24px)}
+.cat-card{
+  position:relative;display:block;aspect-ratio:3/4;overflow:hidden;background:var(--carbon);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 28px),calc(100% - 28px) 100%,0 100%);
+  transition:transform .2s ease;
+}
+.cat-card:hover{transform:translateY(-6px)}
+.cat-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.cat-card:hover img{transform:scale(1.06)}
+.cat-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,14,0) 40%,rgba(11,12,14,.88) 100%)}
+.cat-info{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 26px;color:var(--white)}
+.cat-info h3{font-family:var(--display);font-style:italic;font-weight:800;font-size:clamp(21px,1.9vw,26px);text-transform:uppercase;line-height:1;display:flex;align-items:center;gap:10px}
+.cat-info h3 svg{flex:none;transition:transform .2s ease}
+.cat-card:hover h3 svg{transform:translateX(5px)}
+.cat-info p{font-family:var(--cond);font-weight:600;font-size:14.5px;letter-spacing:.1em;text-transform:uppercase;color:#C9CCD2;margin-top:6px}
+.cat-bar{position:absolute;left:0;bottom:0;height:5px;width:0;background:var(--orange);transition:width .25s ease}
+.cat-card:hover .cat-bar{width:100%}
+.cat-idx{
+  position:absolute;top:14px;right:16px;z-index:2;
+  font-family:var(--display);font-style:italic;font-weight:800;font-size:14px;letter-spacing:.1em;
+  color:rgba(255,255,255,.9);text-shadow:0 1px 10px rgba(0,0,0,.55);
+}
+.cat-flag{
+  position:absolute;top:16px;left:-8px;z-index:2;background:var(--orange);color:var(--white);
+  font-family:var(--display);font-style:italic;font-weight:800;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 18px 7px 22px;transform:skewX(-10deg);
+}
+.cat-flag span{display:inline-block;transform:skewX(10deg)}
+
+/* ---------- services (black diagonal band) ---------- */
+.services{
+  background:var(--carbon);color:var(--white);
+  clip-path:polygon(0 0,100% var(--cut),100% 100%,0 calc(100% - var(--cut)));
+  margin:calc(var(--cut) * -0.5) 0;
+  padding:calc(var(--cut) + clamp(56px,6vw,96px)) 0 calc(var(--cut) + clamp(56px,6vw,96px));
+  position:relative;
+}
+.services::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:repeating-linear-gradient(100deg,transparent 0 180px,rgba(255,255,255,.03) 180px 182px);
+}
+.services .sec-head h2{color:var(--white)}
+.services .eyebrow{color:#9BA1AB}
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,2.6vw,36px)}
+.svc{
+  position:relative;background:#1B1E24;display:flex;flex-direction:column;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 30px),calc(100% - 30px) 100%,0 100%);
+}
+.svc-media{position:relative;aspect-ratio:16/8.5;overflow:hidden}
+.svc-media img{width:100%;height:100%;object-fit:cover}
+.svc-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,30,36,0) 55%,rgba(27,30,36,1) 100%)}
+.svc-body{padding:6px clamp(22px,2.6vw,36px) clamp(26px,3vw,38px);display:flex;flex-direction:column;gap:16px;align-items:flex-start;flex:1 1 auto}
+.svc-body>.btn{margin-top:auto}
+.svc-body h3{font-family:var(--display);font-style:italic;font-weight:800;font-size:clamp(24px,2.3vw,32px);text-transform:uppercase;line-height:1}
+.svc-body h3 em{color:var(--orange)}
+.svc-body p{color:#AEB3BC;font-size:15.5px}
+.svc-body p strong{color:var(--white)}
+.svc-tags{display:flex;gap:10px;flex-wrap:wrap}
+.svc-tags span{
+  font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  color:#C9CCD2;border:1px solid #333842;padding:6px 12px;
+}
+.svc-chip{
+  position:absolute;top:14px;right:-6px;z-index:2;background:var(--orange);color:var(--white);
+  font-family:var(--display);font-style:italic;font-weight:800;font-size:13.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:7px 20px;transform:skewX(-10deg);
+}
+.svc-chip span{display:inline-block;transform:skewX(10deg)}
+
+/* ---------- why ---------- */
+.why{padding:calc(var(--cut) * .5 + clamp(64px,7vw,112px)) 0 clamp(64px,7vw,104px);background:var(--white)}
+.why-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,2.4vw,34px)}
+.why-item{border-top:3px solid var(--black);padding-top:20px;display:flex;flex-direction:column;gap:10px;position:relative}
+.why-item::before{content:"";position:absolute;top:-3px;left:0;width:44px;height:3px;background:var(--orange)}
+.why-num{font-family:var(--display);font-style:italic;font-weight:900;font-size:15px;color:var(--orange);letter-spacing:.1em}
+.why-item h3{font-family:var(--display);font-style:italic;font-weight:800;font-size:20px;text-transform:uppercase;color:var(--black)}
+.why-item p{color:var(--muted);font-size:14.5px}
+
+/* ---------- coming soon ---------- */
+.soon{
+  position:relative;color:var(--white);
+  clip-path:polygon(0 var(--cut),100% 0,100% calc(100% - var(--cut)),0 100%);
+  margin:calc(var(--cut) * -0.5) 0;
+  padding:calc(var(--cut) + clamp(56px,6vw,90px)) 0 calc(var(--cut) + clamp(56px,6vw,90px));
+  background:var(--black);
+}
+.soon-bg{position:absolute;inset:0}
+.soon-bg img{width:100%;height:100%;object-fit:cover}
+.soon-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(11,12,14,.93) 30%,rgba(11,12,14,.62) 100%)}
+.soon .wrap{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+.soon-ghost{
+  font-family:var(--display);font-style:italic;font-weight:900;text-transform:uppercase;line-height:.95;
+  font-size:clamp(40px,5.6vw,84px);
+  color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.55);
+}
+.soon h2{font-size:clamp(38px,4.6vw,68px)}
+.soon h2 em{color:var(--orange)}
+.soon p{color:#C9CCD2;font-size:16.5px;max-width:52ch;font-weight:500}
+
+/* ---------- contact ---------- */
+.contact{padding:calc(var(--cut) * .5 + clamp(64px,7vw,110px)) 0 clamp(64px,7vw,110px);background:var(--grey)}
+.contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,80px);align-items:center}
+.contact h2{font-size:clamp(40px,4.8vw,70px);color:var(--black)}
+.contact h2 em{color:var(--orange)}
+.contact-meta{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.c-line{display:flex;align-items:center;gap:14px;font-family:var(--cond);font-weight:700;font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
+.c-line svg{color:var(--orange);flex:none}
+.c-line a:hover{color:var(--orange)}
+.c-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.socials{display:flex;gap:12px}
+.socials a{
+  width:52px;height:52px;background:var(--black);color:var(--white);
+  display:grid;place-items:center;transform:skewX(-10deg);
+  transition:background-color .18s ease,transform .18s ease;
+}
+.socials a svg{transform:skewX(10deg)}
+.socials a:hover{background:var(--orange);transform:skewX(-10deg) translateY(-3px)}
+
+/* ---------- footer ---------- */
+.foot{background:var(--black);color:#9BA1AB;padding:26px 0}
+.foot .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.foot img{height:34px;width:auto;background:var(--white);padding:5px 12px}
+.foot p{font-family:var(--cond);font-weight:600;font-size:13.5px;letter-spacing:.16em;text-transform:uppercase}
+.foot b{color:var(--orange)}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-media{min-height:300px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+  .hero-media::before{display:none}
+  .hero-copy{padding:clamp(44px,7vw,70px) clamp(20px,4vw,48px)}
+  .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .svc-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  :root{--cut:36px}
+  .cat-grid{grid-template-columns:1fr}
+  .cat-card{aspect-ratio:16/10}
+  .why-grid{grid-template-columns:1fr}
+  .btn{width:100%}
+  .btn>span{width:calc(100% - 8px);justify-content:center;margin-left:4px}
+  .stats .wrap{flex-direction:column;align-items:flex-start;gap:12px}
+  .topbar img{height:36px}
+  .soon-ghost{-webkit-text-stroke:1.5px rgba(255,255,255,.55)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<header class="topbar">
+  <div class="wrap">
+    <img src="https://images.squarespace-cdn.com/content/v1/6953407c0df0de3499621be3/de08ed9a-cedc-4bbe-9bc1-832ab0d3bc42/ChatGPT+Image+Dec+31%2C+2025%2C+05_35_27+PM.png?format=500w" alt="Vision Prints" width="136" height="44">
+    <span class="topbar-meta">Ipswich QLD <b>//</b> Ships Aus-wide</span>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-label="Intro">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Ipswich — 3D Print Workshop</span>
+      <h1 class="d"><span class="h1-top">Your local</span> <em>3D print hub</em></h1>
+      <p class="hero-sub">Custom 3D printing, prototyping, servicing and parts. Built for <strong>accuracy, strength and real-world use</strong> — not just looks.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-orange" href="#shop" id="shop-cta"><span><span>Shop the range
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M12 5v14"/><path d="m6 13 6 6 6-6"/></svg>
+        </span></span></a>
+        <a class="btn btn-dark" href="https://www.visionprints.com.au/customprototyping"><span><span>Start a custom job
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </span></span></a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="https://images.squarespace-cdn.com/content/v1/6953407c0df0de3499621be3/97e3b361-5c62-47a2-a567-6c15d4c5251a/ChatGPT+Image+Jan+6%2C+2026%2C+09_13_59+PM.png?format=1500w" alt="Vision Prints workshop with a wall of colourful filament spools" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<!-- stat strip -->
+<div class="stats" role="presentation">
+  <div class="wrap">
+    <span class="stat">Free diagnostics</span>
+    <span class="stat">Local pickup — Ipswich</span>
+    <span class="stat">Ships Australia-wide</span>
+    <span class="stat">No minimum order</span>
+  </div>
+</div>
+
+<main>
+<!-- ============ SHOP ============ -->
+<section class="shop" id="shop" aria-labelledby="shop-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">The Shop</span>
+        <h2 class="d" id="shop-title">Printed &amp; <em>ready</em></h2>
+      </div>
+    </div>
+
+    <div class="cat-grid">
+      <a class="cat-card" href="https://www.visionprints.com.au/cookie-cutters">
+        <span class="cat-idx" aria-hidden="true">01</span>
+        <img src="images/cookie-cutters.jpg" alt="Colourful 3D printed cookie cutters including a star, heart, gingerbread man and circle" loading="lazy">
+        <span class="cat-shade" aria-hidden="true"></span>
+        <span class="cat-info">
+          <h3>Cookie Cutters
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </h3>
+          <p>Custom shapes — any design</p>
+        </span>
+        <span class="cat-bar" aria-hidden="true"></span>
+      </a>
+
+      <a class="cat-card" href="https://www.visionprints.com.au/cake-toppers-1">
+        <span class="cat-idx" aria-hidden="true">02</span>
+        <img src="images/cake-toppers.jpg" alt="3D printed Happy Birthday cake topper with a decorative heart accent" loading="lazy">
+        <span class="cat-shade" aria-hidden="true"></span>
+        <span class="cat-info">
+          <h3>Cake Toppers
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </h3>
+          <p>Design yours online in 60s</p>
+        </span>
+        <span class="cat-bar" aria-hidden="true"></span>
+      </a>
+
+      <a class="cat-card" href="https://www.visionprints.com.au/misc">
+        <span class="cat-idx" aria-hidden="true">03</span>
+        <img src="images/misc.jpg" alt="Sleek 3D printed model spacecraft with twin engines" loading="lazy">
+        <span class="cat-shade" aria-hidden="true"></span>
+        <span class="cat-info">
+          <h3>Misc Prints
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </h3>
+          <p>One-offs &amp; cool stuff</p>
+        </span>
+        <span class="cat-bar" aria-hidden="true"></span>
+      </a>
+
+      <a class="cat-card" href="https://www.visionprints.com.au/filament-parts-1">
+        <span class="cat-idx" aria-hidden="true">04</span>
+        <span class="cat-flag"><span>Coming Soon</span></span>
+        <img src="images/filament-parts.jpg" alt="Stacked spools of orange, black and white filament" loading="lazy">
+        <span class="cat-shade" aria-hidden="true"></span>
+        <span class="cat-info">
+          <h3>Filament &amp; Parts
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </h3>
+          <p>Join the waitlist — first dibs</p>
+        </span>
+        <span class="cat-bar" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="services" aria-labelledby="svc-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Services</span>
+        <h2 class="d" id="svc-title">The <em>workshop</em></h2>
+      </div>
+    </div>
+
+    <div class="svc-grid">
+      <article class="svc">
+        <div class="svc-media">
+          <img src="images/prototyping.jpg" alt="3D printed gearbox housing prototype on a workbench with calipers and tools" loading="lazy">
+        </div>
+        <div class="svc-body">
+          <h3>Custom printing &amp; <em>prototyping</em></h3>
+          <p>Functional parts, one-off designs and small-batch production. Whether you're refining an idea, replacing a broken component or developing a working prototype — we focus on <strong>accuracy, strength and real-world usability</strong>, not just looks.</p>
+          <div class="svc-tags"><span>One-offs</span><span>Small batch</span><span>Functional parts</span></div>
+          <a class="btn btn-orange" href="https://www.visionprints.com.au/customprototyping"><span><span>Start a job
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </span></span></a>
+        </div>
+      </article>
+
+      <article class="svc">
+        <span class="svc-chip"><span>Free diagnostics</span></span>
+        <div class="svc-media">
+          <img src="images/repairs.jpg" alt="Disassembled 3D printer hotend with precision tools on a tray" loading="lazy">
+        </div>
+        <div class="svc-body">
+          <h3>Servicing &amp; <em>repairs</em></h3>
+          <p>Printer playing up? Hands-on servicing and support to get you back up and running fast. Every repair starts with a <strong>free diagnosis</strong> — you'll know exactly what's wrong and what's required before any work happens.</p>
+          <div class="svc-tags"><span>All brands</span><span>Free diagnosis</span><span>No surprises</span></div>
+          <a class="btn btn-orange" href="https://www.visionprints.com.au/service-support"><span><span>Book a repair
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </span></span></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="why" aria-labelledby="why-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Why Vision Prints</span>
+        <h2 class="d" id="why-title">Built <em>different</em></h2>
+      </div>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-num">/ 01</span>
+        <h3>Free diagnostics</h3>
+        <p>Every repair starts with a free diagnosis. You approve the work before it happens — no surprises.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-num">/ 02</span>
+        <h3>Ipswich local</h3>
+        <p>Based in Ipswich, QLD 4305. Local pickup available, or we ship anywhere in Australia.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-num">/ 03</span>
+        <h3>Built to function</h3>
+        <p>Accuracy, strength and usability come first. Parts that actually work, not just display pieces.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-num">/ 04</span>
+        <h3>One-offs welcome</h3>
+        <p>Single parts through to small-batch runs. No minimum order — no job too weird.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMING SOON ============ -->
+<section class="soon" aria-labelledby="soon-title">
+  <div class="soon-bg" aria-hidden="true">
+    <img src="images/coming-soon-bg.jpg" alt="" loading="lazy">
+  </div>
+  <div class="wrap">
+    <span class="soon-ghost" aria-hidden="true">Filament &amp; parts</span>
+    <h2 class="d" id="soon-title">Landing <em>soon</em></h2>
+    <p>Quality filament, nozzles and printer parts — stocked locally, priced fairly. Join the waitlist and be first in line when the shelves fill up.</p>
+    <a class="btn btn-orange" href="https://www.visionprints.com.au/filament-parts-1"><span><span>Join the waitlist
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+    </span></span></a>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" aria-labelledby="contact-title">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow">Get in touch</span>
+      <h2 class="d" id="contact-title" style="margin-top:14px">Got a part that <em>needs printing?</em></h2>
+    </div>
+    <div class="contact-meta">
+      <span class="c-line">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Ipswich, QLD 4305
+      </span>
+      <span class="c-line">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <a href="mailto:visionprints3d@gmail.com">visionprints3d@gmail.com</a>
+      </span>
+      <div class="c-actions">
+        <a class="btn btn-dark" href="https://www.visionprints.com.au/contact-2"><span><span>Contact us
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </span></span></a>
+        <div class="socials">
+          <a href="https://www.facebook.com/profile.php?id=61585670681214&sk=about" aria-label="Vision Prints on Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@vision.prints" aria-label="Vision Prints on TikTok">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <img src="https://images.squarespace-cdn.com/content/v1/6953407c0df0de3499621be3/de08ed9a-cedc-4bbe-9bc1-832ab0d3bc42/ChatGPT+Image+Dec+31%2C+2025%2C+05_35_27+PM.png?format=300w" alt="Vision Prints" width="105" height="34" loading="lazy">
+    <p>Ipswich QLD 4305 <b>//</b> visionprints3d@gmail.com</p>
+  </div>
+</footer>
+
+<!-- ============ SQUARESPACE EMBED CONTRACT ============
+  Same pattern as the cake-topper page. When loaded with ?embed=full inside
+  an iframe, this page:
+    - adds .vp-embed-full on <html>
+    - posts {vpHome:"height", h} to the parent (ResizeObserver + load + 1.5s interval)
+    - posts {vpHome:"scrollTo", y} when the hero shop CTA is clicked,
+      so the parent can scroll the top window to iframeTop + y.
+  Inert without the query param. All outbound links are absolute URLs with
+  <base target="_top"> so they navigate the top window, never the iframe.
+==================================================== -->
+<script>
+(function(){
+  var embedded = window.parent !== window && /[?&]embed=full/.test(location.search);
+  if(embedded) document.documentElement.classList.add("vp-embed-full");
+
+  var shopCta = document.getElementById("shop-cta");
+  var shopSection = document.getElementById("shop");
+  if(shopCta && shopSection) shopCta.addEventListener("click", function(e){
+    e.preventDefault();
+    var y = Math.round(shopSection.getBoundingClientRect().top + (window.scrollY || document.documentElement.scrollTop));
+    if(embedded){
+      window.parent.postMessage({vpHome:"scrollTo", y:y}, "*");
+    } else {
+      shopSection.scrollIntoView({behavior:"smooth"});
+    }
+  });
+
+  if(!embedded) return;
+  var post = function(){
+    var h = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    window.parent.postMessage({vpHome:"height", h:h}, "*");
+  };
+  if(window.ResizeObserver) new ResizeObserver(post).observe(document.body);
+  window.addEventListener("load", post);
+  setInterval(post, 1500);
+  post();
+})();
+</script>
+</body>
+</html>
