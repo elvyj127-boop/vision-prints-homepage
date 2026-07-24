@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Custom Printing &amp; Prototyping — Vision Prints</title>
+<base target="_top">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#FF5E1A;
+  --orange-dark:#E44A07;
+  --black:#0B0C0E;
+  --carbon:#14161A;
+  --white:#FFFFFF;
+  --grey:#F2F3F5;
+  --line:#E3E5E8;
+  --text:#15171B;
+  --muted:#5D636D;
+  --display:'Kanit',Arial,sans-serif;
+  --body:'Barlow',Arial,sans-serif;
+  --cond:'Barlow Condensed',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--white);color:var(--text);line-height:1.6}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+a,button,summary{cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+section,header,footer{overflow-x:clip}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+
+/* type */
+.d{font-family:var(--display);font-style:italic;font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-.01em}
+.eyebrow{
+  font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--muted);display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:26px;height:12px;flex:none;
+  background:linear-gradient(105deg,var(--orange) 0 40%,transparent 40% 55%,var(--orange) 55% 100%);
+  clip-path:polygon(28% 0,100% 0,72% 100%,0 100%);
+}
+
+/* skewed buttons */
+.btn{
+  display:inline-block;padding:0;border:0;background:none;
+  font-family:var(--display);font-style:italic;font-weight:800;font-size:16px;
+  letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;
+}
+.btn>span{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 30px;transform:skewX(-10deg);
+  transition:background-color .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease;
+}
+.btn>span>span{display:inline-flex;align-items:center;gap:10px;transform:skewX(10deg)}
+.btn-orange>span{background:var(--orange);color:var(--white)}
+.btn-orange:hover>span{background:var(--orange-dark);transform:skewX(-10deg) translateY(-2px);box-shadow:0 10px 24px -8px rgba(255,94,26,.6)}
+.btn-dark>span{background:var(--black);color:var(--white)}
+.btn-dark:hover>span{background:#23262C;transform:skewX(-10deg) translateY(-2px);box-shadow:0 10px 24px -10px rgba(11,12,14,.5)}
+.btn-ghost>span{background:transparent;color:var(--white);box-shadow:inset 0 0 0 2px var(--white)}
+.btn-ghost:hover>span{background:var(--white);color:var(--black);transform:skewX(-10deg) translateY(-2px)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;background:var(--white)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:stretch}
+.hero-copy{
+  padding:clamp(48px,6vw,104px) clamp(20px,4vw,48px) clamp(48px,6vw,104px) max(clamp(20px,4vw,48px),calc((100vw - 1240px)/2 + 48px));
+  display:flex;flex-direction:column;align-items:flex-start;gap:26px;justify-content:center;
+}
+.hero h1{font-size:clamp(52px,6.2vw,96px);color:var(--black)}
+.hero h1 .h1-top{display:block;font-size:.44em;letter-spacing:.06em;color:var(--black)}
+.hero h1 em{font-style:italic;color:var(--orange);display:block}
+.hero-sub{font-size:clamp(16px,1.4vw,19px);font-weight:500;color:var(--muted);max-width:46ch}
+.hero-sub strong{color:var(--text)}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px}
+.hero-media{position:relative;min-height:360px;clip-path:polygon(6% 0,100% 0,100% 100%,0 100%)}
+.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,rgba(11,12,14,.42) 0%,rgba(11,12,14,0) 45%);
+}
+.hero-media::before{
+  content:"";position:absolute;left:3.5%;top:0;bottom:0;width:26px;z-index:2;
+  background:var(--orange);transform:skewX(-8deg);transform-origin:top;
+}
+
+/* stat strip */
+.stats{background:var(--black);color:var(--white)}
+.stats .wrap{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding-top:20px;padding-bottom:20px;
+}
+.stat{font-family:var(--cond);font-weight:700;font-size:15.5px;letter-spacing:.16em;text-transform:uppercase;display:inline-flex;align-items:center;gap:14px}
+.stat::before{content:"//";color:var(--orange);font-family:var(--display);font-style:italic}
+
+/* ---------- lets build it (how we help) ---------- */
+.svc{padding:clamp(64px,7vw,112px) 0;background:var(--white)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,3.4vw,40px)}
+.sec-head h2{font-size:clamp(38px,4.4vw,64px);color:var(--black)}
+.sec-head h2 em{color:var(--orange);font-style:italic}
+.sec-head .eyebrow{margin-bottom:14px}
+
+.svc-intro{max-width:760px;display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(40px,4.6vw,60px)}
+.svc-intro p{color:var(--muted);font-size:16.5px}
+.svc-intro p strong{color:var(--text)}
+
+.acc{display:flex;flex-direction:column;border-top:3px solid var(--black)}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-item summary{
+  list-style:none;display:flex;align-items:center;gap:18px;
+  padding:24px 2px;
+}
+.acc-item summary::-webkit-details-marker{display:none}
+.acc-num{flex:none;font-family:var(--cond);font-weight:700;font-size:14px;color:var(--orange);letter-spacing:.14em}
+.acc-title{flex:1 1 auto;font-family:var(--display);font-style:italic;font-weight:800;font-size:clamp(19px,2.1vw,27px);text-transform:uppercase;color:var(--black);line-height:1.1}
+.acc-icon{flex:none;width:36px;height:36px;background:var(--black);color:var(--white);display:grid;place-items:center;transition:background-color .18s ease,transform .25s ease}
+.acc-item[open] .acc-icon{background:var(--orange);transform:rotate(45deg)}
+.acc-body{padding:0 2px clamp(24px,3vw,32px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 28px}
+.acc-body li{list-style:none;position:relative;padding-left:22px;color:var(--muted);font-size:15px}
+.acc-body li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:2px;background:var(--orange)}
+
+/* ---------- our process ---------- */
+.process{padding:clamp(64px,7vw,112px) 0;background:var(--grey)}
+.process-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.process-card{background:var(--white);padding:clamp(30px,3vw,38px) clamp(22px,2.4vw,26px);border-top:4px solid var(--black);display:flex;flex-direction:column;gap:16px;transition:border-color .18s ease,transform .18s ease}
+.process-card:hover{border-color:var(--orange);transform:translateY(-3px)}
+.process-num{font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.14em;color:var(--orange)}
+.process-icon{width:44px;height:44px;background:var(--black);color:var(--white);display:grid;place-items:center;transition:background-color .18s ease}
+.process-card:hover .process-icon{background:var(--orange)}
+.process-title{font-family:var(--display);font-style:italic;font-weight:800;font-size:clamp(18px,1.9vw,23px);text-transform:uppercase;color:var(--black);line-height:1.15}
+.process-desc{color:var(--muted);font-size:14.5px}
+
+/* ---------- bridge cta ---------- */
+.bridge{padding:clamp(56px,6.4vw,96px) 0;background:var(--black);color:var(--white);text-align:center}
+.bridge .eyebrow{justify-content:center;color:#9BA1AB}
+.bridge h2{font-size:clamp(34px,4.6vw,60px);margin-top:16px;color:var(--white)}
+.bridge h2 em{color:var(--orange);font-style:italic}
+.bridge p{color:#9BA1AB;max-width:54ch;margin:16px auto 32px;font-size:16px}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-media{min-height:300px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+  .hero-media::before{display:none}
+  .hero-copy{padding:clamp(44px,7vw,70px) clamp(20px,4vw,48px)}
+  .acc-body{grid-template-columns:1fr}
+  .process-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .btn{width:100%}
+  .btn>span{width:calc(100% - 8px);justify-content:center;margin-left:4px}
+  .stats .wrap{flex-direction:column;align-items:flex-start;gap:12px}
+  .acc-item summary{gap:12px}
+  .acc-num{display:none}
+  .process-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-label="Intro">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Rapid Prototyping Specialists</span>
+      <h1 class="d"><span class="h1-top">Custom Printing &amp;</span> <em>Prototyping</em></h1>
+      <p class="hero-sub">From one-off prototypes to small batch production — we design, print and refine custom parts exclusively on <strong>Bambu Lab hardware</strong>. Free design review on every project, so it prints right the first time.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-orange js-scroll-form" href="#bring-idea-to-life"><span><span>Start your project
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </span></span></a>
+        <a class="btn btn-dark" href="#lets-build-it"><span><span>See what we build
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </span></span></a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="images/custom-hero.jpg" alt="Hands holding a freshly 3D printed prototype part in front of an active Bambu Lab 3D printer, CAD design visible on a laptop screen in the background" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<!-- stat strip -->
+<div class="stats" role="presentation">
+  <div class="wrap">
+    <span class="stat">Custom part specialists</span>
+    <span class="stat">Free design review, every project</span>
+    <span class="stat">48hr response time</span>
+    <span class="stat">One-off to small batch runs</span>
+  </div>
+</div>
+
+<main>
+<!-- ============ LET'S BUILD IT ============ -->
+<section class="svc" id="lets-build-it" aria-labelledby="svc-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Let's Build It</span>
+        <h2 class="d" id="svc-title">From idea to <em>part</em></h2>
+      </div>
+    </div>
+
+    <div class="svc-intro">
+      <p>We provide <strong>hands-on design support and custom 3D printing</strong> for makers, engineers and businesses who need real parts, not just renders.</p>
+      <p>Whether you're testing a new product idea, need a one-off replacement part, or require small batch production, we work with you from concept through to a finished, functional print. Because we specialise in Bambu Lab systems, we can iterate fast without sacrificing precision.</p>
+      <p>Every project starts with a <strong>free design review</strong>, so we can flag print issues before they cost you time or filament.</p>
+    </div>
+
+    <div class="acc">
+      <details class="acc-item" open>
+        <summary>
+          <span class="acc-num">/ 01</span>
+          <span class="acc-title">Custom Part Printing</span>
+          <span class="acc-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <ul class="acc-body">
+          <li>One-off &amp; replacement parts</li>
+          <li>Functional mechanical components</li>
+          <li>Small batch production runs</li>
+          <li>Multi-material &amp; multi-colour options</li>
+        </ul>
+      </details>
+
+      <details class="acc-item">
+        <summary>
+          <span class="acc-num">/ 02</span>
+          <span class="acc-title">Prototyping &amp; Iteration</span>
+          <span class="acc-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <ul class="acc-body">
+          <li>Rapid concept prototypes</li>
+          <li>Fit &amp; function testing</li>
+          <li>Fast iteration between revisions</li>
+          <li>Material selection guidance</li>
+        </ul>
+      </details>
+
+      <details class="acc-item">
+        <summary>
+          <span class="acc-num">/ 03</span>
+          <span class="acc-title">Design Review &amp; Print Preparation</span>
+          <span class="acc-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <ul class="acc-body">
+          <li>File checks (STL/STEP) before printing</li>
+          <li>Tolerance &amp; wall-thickness advice</li>
+          <li>Print orientation &amp; support strategy</li>
+          <li>Design-for-3D-printing feedback</li>
+        </ul>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUR PROCESS ============ -->
+<section class="process" id="our-process" aria-labelledby="process-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Our Process</span>
+        <h2 class="d" id="process-title">How it <em>comes together</em></h2>
+      </div>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-card">
+        <span class="process-num">/ 01</span>
+        <span class="process-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </span>
+        <span class="process-title">Understand the Requirement</span>
+        <p class="process-desc">Tell us what you're building — the part, the purpose, the deadline. We ask the right questions upfront so nothing gets lost between your idea and the print bed.</p>
+      </div>
+
+      <div class="process-card">
+        <span class="process-num">/ 02</span>
+        <span class="process-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </span>
+        <span class="process-title">Review &amp; Advise</span>
+        <p class="process-desc">We check your files (or help you get there), flag anything that won't print cleanly, and recommend materials and settings suited to how the part will be used.</p>
+      </div>
+
+      <div class="process-card">
+        <span class="process-num">/ 03</span>
+        <span class="process-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 10h16M10 4v16"/></svg>
+        </span>
+        <span class="process-title">Print &amp; Refine</span>
+        <p class="process-desc">Your part gets printed on calibrated Bambu Lab hardware. If it needs a second pass — different infill, different orientation — we iterate with you until it's right.</p>
+      </div>
+
+      <div class="process-card">
+        <span class="process-num">/ 04</span>
+        <span class="process-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <span class="process-title">Deliver with Confidence</span>
+        <p class="process-desc">Finished parts are inspected before they leave our hands, with notes on how they were printed so you know exactly what you're getting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BRIDGE CTA (native form follows on the live page) ============ -->
+<section class="bridge" aria-labelledby="bridge-title">
+  <div class="wrap">
+    <span class="eyebrow">Bring It To Life</span>
+    <h2 class="d" id="bridge-title">Ready to <em>build it</em></h2>
+    <p>Send us your idea, file, or sketch — we'll review it, recommend the best approach, and get back to you within 48 hours with next steps.</p>
+    <a class="btn btn-orange js-scroll-form" href="#bring-idea-to-life"><span><span>Bring Your Idea to Life
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+    </span></span></a>
+  </div>
+</section>
+</main>
+
+<!-- ============ SQUARESPACE EMBED CONTRACT ============
+  Same pattern as service-support.html. When loaded with ?embed=full
+  inside an iframe, this page:
+    - adds .vp-embed-full on <html>
+    - posts {vpCustom:"height", h} to the parent (ResizeObserver + load + fonts.ready + 1.5s interval)
+    - posts {vpCustom:"scrollToForm"} when a .js-scroll-form CTA is clicked, so the
+      parent page can smooth-scroll to the native "Bring Your Idea to Life" form
+      section that sits directly below this iframe (kept native/functional, not
+      reimplemented here)
+  Inert without the query param. All outbound links are absolute URLs with
+  <base target="_top"> so they navigate the top window, never the iframe.
+==================================================== -->
+<script>
+(function(){
+  var embedded = window.parent !== window && /[?&]embed=full/.test(location.search);
+  if(embedded) document.documentElement.classList.add("vp-embed-full");
+
+  document.querySelectorAll(".js-scroll-form").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
+      if(window.parent !== window){
+        window.parent.postMessage({vpCustom:"scrollToForm"}, "*");
+      }else{
+        document.getElementById("lets-build-it").scrollIntoView({behavior:"smooth"});
+      }
+    });
+  });
+
+  if(!embedded) return;
+  var post = function(){
+    var h = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    window.parent.postMessage({vpCustom:"height", h:h}, "*");
+  };
+  if(window.ResizeObserver) new ResizeObserver(post).observe(document.body);
+  window.addEventListener("load", post);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(post);
+  setInterval(post, 1500);
+  post();
+})();
+</script>
+</body>
+</html>
