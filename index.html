@@ -26,7 +26,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{font-family:var(--body);background:var(--white);color:var(--text);line-height:1.6;overflow-x:clip}
+body{font-family:var(--body);background:var(--white);color:var(--text);line-height:1.6}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 a,button{cursor:pointer}
@@ -524,6 +524,7 @@ section,header,footer{overflow-x:clip}
   };
   if(window.ResizeObserver) new ResizeObserver(post).observe(document.body);
   window.addEventListener("load", post);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(post);
   setInterval(post, 1500);
   post();
 })();
